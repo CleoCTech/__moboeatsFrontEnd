@@ -13,3 +13,31 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - We only imported the layouts once, we do not need to import or even wrap the layout in each page, and now, we will not have performance issues and we can keep state when navigating from 2 routes with the same layout.
 - No need to wrap anything anymore; all is handled in App.vue around the `<router-view>` that represents each page when the route changes.
 - **This method works in most use-cases, but it has 1 issue**: The layout only changes when the route changes.
+
+# Install Packages
+    - Install Pinia and import the package inside `main.js` file.
+    - Install `axios` and import the package inside `main.js` file.
+    - Install Tailwind css
+        
+
+        ```    
+        npm install -D tailwindcss postcss autoprefixer
+        npx tailwindcss init -p
+        ```
+
+    ```
+    import { createApp } from 'vue'
+    import { createPinia } from 'pinia'
+
+    import App from './App.vue'
+    import router from './router'
+    import './axios'
+
+    const pinia = createPinia()
+    const app = createApp(App)
+
+    app.use(router)
+    app.use(pinia)
+    app.mount('#app')
+
+    ```

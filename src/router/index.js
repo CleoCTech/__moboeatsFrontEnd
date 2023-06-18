@@ -22,6 +22,38 @@ const routes = [
         name: 'About',
         component: () => import('@/views/Guest/Pages/About.vue')
     },
+
+    /**Auth */
+    {
+        path: '/login',
+        meta: {layout: BlankLayout},
+        name: 'Login',
+        component: () => import('@/views/Admin/Pages/Auth/Login.vue')
+    },
+    {
+        path: '/register',
+        meta: {layout: BlankLayout},
+        name: 'Register',
+        component: () => import('@/views/Admin/Pages/Auth/Register.vue')
+    },
+    {
+        path: '/forgot-password',
+        meta: {layout: BlankLayout},
+        name: 'ForgotPassword',
+        component: () => import('@/views/Admin/Pages/Auth/ForgotPassword.vue')
+    },
+    {
+        path: '/reset-password/:token',
+        meta: {layout: BlankLayout},
+        name: 'ResetPassword',
+        component: () => import('@/views/Admin/Pages/Auth/ResetPassword.vue')
+    },
+    {
+        path: '/admin/dashboard',
+        meta: {layout: AdminLayout},
+        name: 'Dashboard',
+        component: () => import('@/views/Admin/Pages/Dashboard/Home.vue')
+    },
 ]
 const router = createRouter({
     history: createWebHistory(),
