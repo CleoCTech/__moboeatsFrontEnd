@@ -1,29 +1,15 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
-const router = useRouter()
-const user = ref()
+const authStore = useAuthStore()
+
 const form = ref({
-    email: '',
-    password: ''
+    email: 'info@moboeats.com',
+    password: '@dm1n123#'
 })
 
-const handleLogin = async () => {
-    try {
-        await axios.get("http://localhost:8000/sanctum/csrf-cookie")
-        const response = await axios.post('http://localhost:8000/api/v1/login', {
-            email: form.value.email,
-            password: form.value.password
-        });
-        router.push({ name: 'Dashboard' })
-        console.log(response);
-        user.value = response.data;
-    } catch (error) {
-        console.log(error);
-    }
-}
+
 </script>
 
 <template>
@@ -42,12 +28,15 @@ const handleLogin = async () => {
                     relative z-10">
                 <p class="w-full text-4xl font-medium text-center leading-snug font-serif">Login</p>
                 <div class="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                    <form class="space-y-8" @submit.prevent="handleLogin">
+                    <form class="space-y-8" @submit.prevent="authStore.handleLogin(form)">
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Email</p>
                     <input v-model="form.email" placeholder="123@ex.com" type="text" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
-                        border-gray-300 rounded-md"/>
+                        border-gray-300 rounded-md" />
+                    <!-- <div v-if="authStore.errors" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.email[0] }}</span>
+                    </div> -->
                     </div>
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
@@ -55,6 +44,9 @@ const handleLogin = async () => {
                     <input v-model="form.password" placeholder="Password" type="password" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                         border-gray-300 rounded-md"/>
+                        <!-- <div v-if="authStore.errors" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.password[0] }}</span>
+                        </div> -->
                     </div>
                     <div class="relative">
                     <button type="submit" class="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-teal-900

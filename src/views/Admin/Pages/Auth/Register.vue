@@ -1,9 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
-const router = useRouter()
+const authStore = useAuthStore()
 
 const form = ref({
     name: '',
@@ -12,23 +11,11 @@ const form = ref({
     password_confirmation: '',
 })
 
-const handleRegister = async () => {
-    try {
-        const response = await axios.post('http://localhost:8000/api/v1/register', {
-            name: form.value.name,
-            email: form.value.email,
-            password: form.value.password,
-            password_confirmation: form.value.password_confirmation,
-        })
-        router.push({ name: 'login' })
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 </script>
 <template>
     <div>
-        
+
         <!-- component -->
         <div class="bg-white relative lg:py-20">
         <div class="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl
@@ -44,19 +31,25 @@ const handleRegister = async () => {
                     relative z-10">
                 <p class="w-full text-4xl font-medium text-center leading-snug font-serif">Sign up for an account</p>
                 <div class="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                    <form class="space-y-8" @submit.prevent="handleRegister">
+                    <form class="space-y-8" @submit.prevent="authStore.handleRegister(form)">
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
                         absolute">Username</p>
                     <input v-model="form.name" placeholder="John" type="text" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                         border-gray-300 rounded-md"/>
+                        <!-- <div v-if="authStore.errors.name" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.name[0] }}</span>
+                        </div> -->
                     </div>
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">Email</p>
                     <input v-model="form.email" placeholder="123@ex.com" type="text" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                         border-gray-300 rounded-md"/>
+                        <!-- <div v-if="authStore.errors.email" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.email[0] }}</span>
+                        </div> -->
                     </div>
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
@@ -64,6 +57,9 @@ const handleRegister = async () => {
                     <input v-model="form.password" placeholder="Password" type="password" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                         border-gray-300 rounded-md"/>
+                        <!-- <div v-if="authStore.errors.password" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.password[0] }}</span>
+                        </div> -->
                     </div>
                     <div class="relative">
                     <p class="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
@@ -71,6 +67,9 @@ const handleRegister = async () => {
                     <input v-model="form.password_confirmation" placeholder="Password" type="password" class="border placeholder-gray-400 focus:outline-none
                         focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                         border-gray-300 rounded-md"/>
+                        <!-- <div v-if="authStore.errors.password_confirmation" class="flex">
+                        <span class="text-red-400 text-sm p-2 m-2">{{ authStore.errors.password_confirmation[0] }}</span>
+                        </div> -->
                     </div>
                     <div class="relative">
                     <button type="submit" class="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-teal-900
