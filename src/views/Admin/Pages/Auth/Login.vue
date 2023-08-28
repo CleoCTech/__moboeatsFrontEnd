@@ -6,10 +6,11 @@ const authStore = useAuthStore()
 
 const form = ref({
     email: 'info@moboeats.com',
-    password: '@dm1n123#'
+    password: '@dm1n123#',
+    user_type: 'restaurant',
 })
 
-
+    
 </script>
 
 <template>

@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user.js'
 import { useAuthStore } from '@/stores/auth.js'
 
+import WelcomeBanner from '@/views/Admin/Partials/Dashboard/WelcomeBanner.vue'
+
 const user = useUserStore()
 const jsonString = JSON.stringify(user.$state, null, 2)
 const jsonObject = JSON.parse(jsonString);
@@ -33,11 +35,12 @@ onMounted( async () => {
 </script>
 
 <template>
-    <div v-if="user" class="home p-4 sm:ml-64 mt-16">
+    <div v-if="user" class="home p-4 mt-16">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-            <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                <p class="text-2xl text-gray-400 dark:text-gray-500">{{ salutation }} {{ name }},  Welcome to dashboard</p>
-            </div>
+            <WelcomeBanner 
+            :name="name" 
+            :salutation="salutation" 
+            />
         </div>
     </div>
     <div v-else class="p-4 sm:ml-64 mt-16">
@@ -88,5 +91,8 @@ onMounted( async () => {
                 </div>
             </div>
         </div>
+    </div>
+    <div class="grid grid-cols-12 gap-6">
+
     </div>
 </template>

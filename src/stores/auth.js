@@ -38,19 +38,26 @@ export const useAuthStore = defineStore({
 			const user = useUserStore()
 			try {
                 await this.getToken()
-				const response =  await api.post('/login', {  email: data.email, password: data.password })
+				const response =  await api.post('/login', {  email: data.email, password: data.password, userType: data.user_type})
                 console.log(response);
                 if (response) {
-                    this.updateState({ email: data.email,token:response.data.data.tokens.admin, isLoggedIn: true })
+                    this.updateState({ email: data.email,token:response.data.data.token, isLoggedIn: true })
 				    await user.storeInfo()
-                    await this.router.push({ name: 'Dashboard' })
+					if (response.data.data.user.role === 'admin' || response.data.data.user.role === 'restaurant') {
+						await this.router.push({ name: 'Dashboard' })
+					} else {
+						this.logout()
+						console.log('Unathorized');
+					}
+                    
                 }
                 isLoading.value = false;
 			} catch (error) {
-				 if (error.response.status === 422) {
-                    // this.authErrors = error.response.data.errors;
-                }
-                console.log(error);
+				console.log(error);
+				//  if (error.response.status === 422) {
+                //     // this.authErrors = error.response.data.errors;
+                // }
+                // console.log(error);
                 isLoading.value = false;
 			}
 		},
@@ -63,6 +70,7 @@ export const useAuthStore = defineStore({
                     email: data.email,
                     password: data.password,
                     password_confirmation: data.password_confirmation,
+                    userType: data.user_type,
                 })
 				// this.updateState({ email: data.email, isLoggedIn: true })
 				// await user.storeInfo()
@@ -85,7 +93,6 @@ export const useAuthStore = defineStore({
 				throw error
 			}
 		},
-
 		async logout() {
             isLoading.value = true;
 			const user = useUserStore()

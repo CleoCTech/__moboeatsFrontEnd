@@ -9,6 +9,7 @@ const form = ref({
     email: '',
     password: '',
     password_confirmation: '',
+    user_type: 'restaurant',
 })
 
 
