@@ -55,9 +55,9 @@
     import xFilter from '@/components/Filter.vue';
     import xMenuBar from '@/components/MenuBar.vue'
     import DeleteButton from '@/components/DeleteButton.vue'
-    import DateSelect from '@/Components/Mosaic/DateSelect.vue'
-    import FilterButton from '@/Components/Mosaic/DropdownFilter.vue'
-    import PaginationClassic from '@/Components/Mosaic/PaginationClassic.vue'
+    import DateSelect from '@/Components/DateSelect.vue'
+    import FilterButton from '@/Components/DropdownFilter.vue'
+    import PaginationClassic from '@/Components/PaginationClassic.vue'
 
     import {  useIndex } from '@/composables/useIndex'
 

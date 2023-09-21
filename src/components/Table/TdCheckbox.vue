@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, watch, defineEmits, computed } from 'vue';
-import Checkbox from '@/Components/Mosaic/Checkbox.vue'
+import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps({
   item: String, 
